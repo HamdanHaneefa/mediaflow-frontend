@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { API_BASE_URL } from "@/lib/apiFetch";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Video } from "lucide-react";
@@ -30,7 +31,7 @@ export default function LoginPage() {
       formData.append("username", username);
       formData.append("password", password);
 
-      const res = await fetch("http://localhost:8000/api/v1/auth/login", {
+      const res = await fetch(`${API_BASE_URL}/api/v1/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
@@ -45,7 +46,7 @@ export default function LoginPage() {
       const data = await res.json();
       
       // Fetch user details
-      const userRes = await fetch("http://localhost:8000/api/v1/auth/me", {
+      const userRes = await fetch(`${API_BASE_URL}/api/v1/auth/me`, {
         headers: {
           Authorization: `Bearer ${data.access_token}`
         }
